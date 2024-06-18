@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.restaurant</groupId>
-	<artifactId>restuarant_spring</artifactId>
+	<artifactId>restaurant_spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>restaurant_spring</name>
 	<description>restaurant_spring</description>
