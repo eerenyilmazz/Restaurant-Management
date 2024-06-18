@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoNgZorroAntdModule } from './DemoNgZorroAntdModule';
-import { LoginComponent } from './auth-components/login/login.component';
+import { LoginComponent } from './auth-compenents/login/login.component';
 registerLocaleData(en);
 
 @NgModule({

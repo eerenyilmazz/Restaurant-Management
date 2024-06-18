@@ -4,6 +4,8 @@ import com.restaurant.dtos.AuthenticationRequest;
 import com.restaurant.dtos.AuthenticationResponse;
 import com.restaurant.dtos.SignupRequest;
 import com.restaurant.dtos.UserDto;
+import com.restaurant.entities.User;
+import com.restaurant.repositories.UserRepository;
 import com.restaurant.services.auth.AuthService;
 import com.restaurant.util.JwtUtil;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -27,12 +31,14 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
-    public AuthController(AuthService authService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil) {
+    public AuthController(AuthService authService, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil, UserRepository userRepository) {
         this.authService = authService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/signup")
@@ -57,7 +63,16 @@ public class AuthController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }
+        Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
 
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+
+        if (optionalUser.isPresent()) {
+            authenticationResponse.setJwt(jwt);
+            authenticationResponse.setUserRole(optionalUser.get().getUserRole());
+            authenticationResponse.setUserId(optionalUser.get().getId());
+        }
+
+        return ResponseEntity.ok(authenticationResponse);
+    }
 }
