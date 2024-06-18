@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService } from 'src/app/auth-service/auth-serive/auth.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class SignupComponent implements OnInit {
   isSpinning: boolean;
   validateForm: FormGroup;
 
-  constructor(private service: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private service: AuthService, 
+    private fb: FormBuilder,
+    private notification:NzNotificationService
+  ) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -39,6 +44,13 @@ export class SignupComponent implements OnInit {
       console.log(this.validateForm.value);
       this.service.signup(this.validateForm.value).subscribe((res) => {
         console.log(res);
+        if(res.id!=null)
+          {
+            this.notification.success("SUCCESSFUL!","You're registered successfully",{nzDuration:5000});
+          } else {
+            this.notification.success("ERROR!","Something went wrong!",{nzDuration:5000});
+
+          }
       });
     } else {
       console.error("Form is not valid");
