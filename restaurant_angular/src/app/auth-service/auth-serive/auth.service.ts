@@ -12,7 +12,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  signup(signuprequest: any):Observable<any>{
-    return this.http.post<[]>(BASE_URL + "api/auth/signup", signuprequest)
+  signup(signupRequest: any):Observable<any>{
+    return this.http.post<[]>(BASE_URL + "api/auth/signup", signupRequest)
   }
+
+  login(loginRequest: any):Observable<any>{
+    return this.http.post<[]>(BASE_URL + "api/auth/login", loginRequest)
+  }
+
 }

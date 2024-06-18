@@ -1,3 +1,13 @@
-<h3>Restaurant Management System</h3>
-
-<router-outlet></router-outlet>>
+<div>
+    <nz-header class="main-header" nz-row nzType="flex" style="background-color: #000000;">
+      <div>
+        <a style="color: rgb(255, 255, 255); margin-left: 50px; font-size: 18px; font-weight: bolder;" routerLink="/login">Restaurant System</a>
+      </div>
+      <div class="nav-links">
+        <a nz-button nzType="link" routerLink="/signup" routerLinkActive="active">Sign Up</a>
+        <a nz-button nzType="link" routerLink="/login" routerLinkActive="active">Login</a>
+      </div>
+    </nz-header>
+  </div>
+  <router-outlet></router-outlet>
+  

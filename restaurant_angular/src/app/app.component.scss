@@ -1,0 +1,96 @@
+$secondary-color: #3498db;  
+$primary-color: #000000;   
+$white: #ffffff;            
+$white-one: #f9f9f9;      
+
+@keyframes color-change {
+  from {
+    background-color: $primary-color;
+    border-radius: 0px;
+  }
+  to {
+    background-color: $secondary-color;
+    border-radius: 15px;
+  }
+}
+
+@keyframes bg-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+body {
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  background-size: 200% 200%;
+  animation: bg-move 10s infinite alternate;
+  font-family: Arial, sans-serif;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 57px;
+  background-color: $primary-color;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: slide-in 0.5s ease-out;
+
+  a.active {
+    background: $secondary-color;
+    transition: background 0.3s;
+  }
+
+  a {
+    font-weight: 300;
+    font-size: 15px;
+    border-radius: 0px;
+    color: $white;
+    border-radius: 15px;
+    padding: 10px 20px;
+    transition: color 0.3s, background 0.3s, transform 0.3s;
+
+    &:hover {
+      animation: hover-bounce 0.5s;
+      transform: scale(1.05);
+
+      &.ant-btn {
+        color: $white;
+        background: $secondary-color;
+      }
+    }
+  }
+
+  img {
+    width: 180px;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .img_profile {
+    width: 25px;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: rotate(360deg);
+    }
+  }
+
+  .active-button {
+    border-radius: 0px !important;
+    padding: 2px 5px !important;
+    background: $secondary-color;
+    transition: background 0.3s, transform 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
