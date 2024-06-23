@@ -16,6 +16,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +61,14 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User disabled. Contact administrator.");
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        // Correct assignment of UserDetails
+        final UserDetails userDetails;
+        try {
+            userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
         Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
