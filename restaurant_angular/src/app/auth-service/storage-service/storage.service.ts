@@ -41,4 +41,9 @@ export class StorageService {
     const role = this.getUserRole();
     return role === 'CUSTOMER';
   }
+
+  static signOut(){
+    window.localStorage.removeItem(USER);
+    window.localStorage.removeItem(TOKEN);
+  }
 }

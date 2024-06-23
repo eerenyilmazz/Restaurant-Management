@@ -1,13 +1,38 @@
-<div>
-    <nz-header class="main-header" nz-row nzType="flex" style="background-color: #000000;">
-      <div>
-        <a style="color: rgb(255, 255, 255); margin-left: 50px; font-size: 18px; font-weight: bolder;" routerLink="/login">Restaurant System</a>
-      </div>
-      <div class="nav-links">
-        <a nz-button nzType="link" routerLink="/signup" routerLinkActive="active">Sign Up</a>
-        <a nz-button nzType="link" routerLink="/login" routerLinkActive="active">Login</a>
-      </div>
-    </nz-header>
-  </div>
-  <router-outlet></router-outlet>
-  
+<div *ngIf="!isAdminLoggedIn && !isCustomerLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex" style="background-color: #000000;">
+    <div>
+      <a style="color: rgb(255, 255, 255); margin-left: 50px; font-size: 18px; font-weight: bolder;" routerLink="/login">Restaurant System</a>
+    </div>
+    <div class="nav-links">
+      <a nz-button nzType="link" routerLink="/signup" routerLinkActive="active">Sign Up</a>
+      <a nz-button nzType="link" routerLink="/login" routerLinkActive="active">Login</a>
+    </div>
+  </nz-header>
+</div>
+
+<div *ngIf="isAdminLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex" style="background-color: #000000;">
+    <div>
+      <a style="color: rgb(255, 255, 255); margin-left: 50px; font-size: 18px; font-weight: bolder;" routerLink="/login">Restaurant System</a>
+    </div>
+    <div class="nav-links">
+      <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+      <a nz-button nzType="link" routerLink="/admin/category" routerLinkActive="active">Category</a>
+      <a nz-button nzType="link" routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
+    </div>
+  </nz-header>
+</div>     
+
+<div *ngIf="isCustomerLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex" style="background-color: #000000;">
+    <div>
+      <a style="color: rgb(255, 255, 255); margin-left: 50px; font-size: 18px; font-weight: bolder;" routerLink="/login">Restaurant System</a>
+    </div>
+    <div class="nav-links">
+      <a nz-button nzType="link" routerLink="/customer/dashboard" routerLinkActive="active">Dashboard</a>
+      <a nz-button nzType="link" routerLink="/login" routerLinkActive="active">Logout</a>
+    </div>
+  </nz-header>
+</div>
+
+<router-outlet></router-outlet>
