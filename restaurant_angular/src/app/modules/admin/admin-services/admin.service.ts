@@ -21,7 +21,7 @@ export class AdminService {
     );
   }
 
-  getAllCategory(): Observable<any> {
+  getAllCategories(): Observable<any> {
     return this.http.get(BASE_URL + "api/admin/categories", {
       headers: this.createAuthorizationHeader()
     }).pipe(
@@ -29,14 +29,21 @@ export class AdminService {
     );
   }
 
+  getAllCategoriesByTitle(title: string): Observable<any> {
+    return this.http.get(BASE_URL + `api/admin/categories/${title}`, {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+
   private createAuthorizationHeader(): HttpHeaders {
     let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();
-    console.log("Token:", token); 
     if (token) {
       authHeaders = authHeaders.set("Authorization", "Bearer " + token);
     }
-    console.log("Headers:", authHeaders); 
     return authHeaders;
   }
 

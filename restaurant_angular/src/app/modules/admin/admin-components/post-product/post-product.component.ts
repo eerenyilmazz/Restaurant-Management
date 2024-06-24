@@ -10,23 +10,4 @@ import { AdminService } from '../../admin-services/admin.service';
 })
 export class PostProductComponent {
 
-  constructor(
-    private service: AdminService,
-    private fb: FormBuilder,
-    private message: NzMessageService
-  )
-  {}
-
-  ngOnInit(){
-    this.getAllCategories();
-    
-    }
-
-  
-    getAllCategories(){
-      this.service.getAllCategory().subscribe((res)=>{
-        console.log(res);
-      })
-
-    }
 }

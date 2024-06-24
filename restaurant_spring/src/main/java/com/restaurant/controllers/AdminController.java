@@ -43,4 +43,11 @@ public class AdminController {
         if (categoryDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categoryDtoList);
     }
+
+    @GetMapping("/categories/{title}")
+    public ResponseEntity<List<CategoryDto>> getAllCategoriesByTitle(@PathVariable String title){
+        List<CategoryDto> categoryDtoList = adminService.getAllCategoriesByTitle(title);
+        if (categoryDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(categoryDtoList);
+    }
 }
