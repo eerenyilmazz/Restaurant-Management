@@ -4,12 +4,10 @@ import com.restaurant.dtos.CategoryDto;
 import com.restaurant.services.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /*
 @RequiredArgsConstructor sadece final ve
@@ -17,7 +15,11 @@ import java.io.IOException;
 oluşturur. Eğer sınıfta final olmayan alanlar varsa,
 bu alanlar için yapılandırıcı oluşturulmaz.
 Öte yandan, @AllArgsConstructor ise sınıftaki tüm alanlar
-(hem final hem de final olmayanlar) için bir yapılandırıcı oluşturur. */
+(hem final hem de final olmayanlar) için bir yapılandırıcı oluşturur.
+ final olarak tanımladığınız AdminService örneği, yalnızca bir kere başlatılacak ve değiştirilemeyecek.
+ Bu da AdminService'in stabil çalışmasını sağlar, çünkü herhangi bir yerde yeniden atanamaz veya değiştirilemez.
+ Bu, bağımlılık enjeksiyonunun (dependency injection) bir avantajıdır ve final keyword'üyle
+ birlikte kullanılması bu durumu daha da pekiştirir.*/
 
 @RestController
 @RequestMapping("/api/admin")
@@ -33,5 +35,12 @@ public class AdminController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(createdCategoryDto);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategoryDto>> getAllCategories(){
+        List<CategoryDto> categoryDtoList = adminService.getAllCategories();
+        if (categoryDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(categoryDtoList);
     }
 }

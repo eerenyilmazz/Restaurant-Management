@@ -21,6 +21,14 @@ export class AdminService {
     );
   }
 
+  getAllCategory(): Observable<any> {
+    return this.http.get(BASE_URL + "api/admin/categories", {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private createAuthorizationHeader(): HttpHeaders {
     let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();

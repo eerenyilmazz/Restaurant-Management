@@ -61,7 +61,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User disabled. Contact administrator.");
         }
 
-        // Correct assignment of UserDetails
         final UserDetails userDetails;
         try {
             userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
