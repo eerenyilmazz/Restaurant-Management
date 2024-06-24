@@ -11,17 +11,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
+/*
+@RequiredArgsConstructor sadece final ve
+@NonNull alanlar için bir yapıcı (constructor)
+oluşturur. Eğer sınıfta final olmayan alanlar varsa,
+bu alanlar için yapılandırıcı oluşturulmaz.
+Öte yandan, @AllArgsConstructor ise sınıftaki tüm alanlar
+(hem final hem de final olmayanlar) için bir yapılandırıcı oluşturur. */
+
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
 
-    private AdminService adminService;
+    private final AdminService adminService;
 
     @PostMapping("/category")
     public ResponseEntity<CategoryDto> postCategory(@ModelAttribute CategoryDto categoryDto) throws IOException {
         CategoryDto createdCategoryDto = adminService.postCategory(categoryDto);
-        if (createdCategoryDto == null) return  ResponseEntity.notFound().build();
+        if (createdCategoryDto == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(createdCategoryDto);
     }
 }
