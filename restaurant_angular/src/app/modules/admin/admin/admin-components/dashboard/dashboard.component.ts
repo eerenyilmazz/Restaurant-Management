@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   categories: any[] = [];
   validateForm!: FormGroup;
   size: NzButtonSize = 'large';
-  isSpinning: boolean = false; // Initialize isSpinning as false
+  isSpinning: boolean = false;
 
   constructor(private adminService: AdminService, private fb: FormBuilder) { }
 

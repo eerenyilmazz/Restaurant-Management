@@ -2,6 +2,7 @@ package com.restaurant.controllers;
 
 import com.restaurant.dtos.CategoryDto;
 import com.restaurant.dtos.ProductDto;
+import com.restaurant.entities.Product;
 import com.restaurant.services.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProductDto);
     }
 
-
+    @GetMapping("/{categoryId}/products")
+    public ResponseEntity<List<ProductDto>> getAllProductsByCategory(@PathVariable Long categoryId){
+        List<ProductDto> productDtoList = adminService.getAllProductsByCategory(categoryId);
+        if (productDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDtoList);
+    }
 
 }

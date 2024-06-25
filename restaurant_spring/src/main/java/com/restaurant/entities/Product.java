@@ -1,5 +1,6 @@
 package com.restaurant.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.restaurant.dtos.ProductDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -25,5 +26,17 @@ public class Product {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Category category;
+
+    public ProductDto getProductDto() {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(id);
+        productDto.setName(name);
+        productDto.setPrice(price);
+        productDto.setDescription(description);
+        productDto.setReturnedImg(img);
+        productDto.setCategoryId(category.getId());
+        productDto.setCategoryName(category.getName());
+        return productDto;
+    }
     
 }
