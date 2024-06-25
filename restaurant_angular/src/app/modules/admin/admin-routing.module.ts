@@ -8,7 +8,7 @@ const routes: Routes = [
 
   {path: "dashboard", component: DashboardComponent },
   {path: "category", component: AddCategoryComponent },
-  {path: "product", component: PostProductComponent },
+  {path: ":categoryId/product", component: PostProductComponent },
 
   ];
 

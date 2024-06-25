@@ -36,6 +36,17 @@ export class AdminService {
       catchError(this.handleError)
     );
   }
+
+
+  // Product Operationns
+
+  postProduct(categoryId: number, productDto: any): Observable<any> {
+    return this.http.post(BASE_URL + `api/admin/${categoryId}/product`, productDto, {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
   
 
   private createAuthorizationHeader(): HttpHeaders {
