@@ -17,4 +17,6 @@ public interface AdminService {
     ProductDto postProduct(Long categoryId, ProductDto productDto) throws IOException;
 
     List<ProductDto> getAllProductsByCategory(Long categoryId);
+
+    List<ProductDto> getProductsByCategoryAndTitle(Long categoryId , String title);
 }

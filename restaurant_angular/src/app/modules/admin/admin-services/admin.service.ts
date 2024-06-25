@@ -55,6 +55,16 @@ export class AdminService {
       catchError(this.handleError)
     );
   }
+
+  getProductsByCategoryAndTitle(categoryId: number,title: String): Observable<any> {
+    return this.http.get(BASE_URL + `api/admin/${categoryId}/product/${title}`, {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  
   
 
   private createAuthorizationHeader(): HttpHeaders {
