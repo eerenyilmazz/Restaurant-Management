@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../admin-services/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzButtonSize } from 'ng-zorro-antd/button';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-view-products',
@@ -19,7 +20,8 @@ export class ViewProductsComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private activatedroute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private message:NzMessageService
   ) { 
     this.categoryId = this.activatedroute.snapshot.params['categoryId'];
   }
@@ -62,6 +64,18 @@ export class ViewProductsComponent implements OnInit {
     }, error => {
       this.isSpinning = false;
       console.error(error); 
+    });
+  }
+
+  deleteProduct(productId: number): void {
+    this.adminService.deleteProduct(productId).subscribe((res) => {
+      if (res == null) {
+        this.getProductsByCategory();
+        this.message.success('Product deleted successfully!', { nzDuration: 3000 });
+      }
+    }, error => {
+      console.error(error);
+      this.message.error('Error deleting product', { nzDuration: 3000 });
     });
   }
 }

@@ -2,7 +2,6 @@ package com.restaurant.controllers;
 
 import com.restaurant.dtos.CategoryDto;
 import com.restaurant.dtos.ProductDto;
-import com.restaurant.entities.Product;
 import com.restaurant.services.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,18 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-
-/*
-@RequiredArgsConstructor sadece final ve
-@NonNull alanlar için bir yapıcı (constructor)
-oluşturur. Eğer sınıfta final olmayan alanlar varsa,
-bu alanlar için yapılandırıcı oluşturulmaz.
-Öte yandan, @AllArgsConstructor ise sınıftaki tüm alanlar
-(hem final hem de final olmayanlar) için bir yapılandırıcı oluşturur.
- final olarak tanımladığınız AdminService örneği, yalnızca bir kere başlatılacak ve değiştirilemeyecek.
- Bu da AdminService'in stabil çalışmasını sağlar, çünkü herhangi bir yerde yeniden atanamaz veya değiştirilemez.
- Bu, bağımlılık enjeksiyonunun (dependency injection) bir avantajıdır ve final keyword'üyle
- birlikte kullanılması bu durumu daha da pekiştirir.*/
 
 @RestController
 @RequestMapping("/api/admin")
@@ -41,21 +28,18 @@ public class AdminController {
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<List<CategoryDto>> getAllCategories(){
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
         List<CategoryDto> categoryDtoList = adminService.getAllCategories();
         if (categoryDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categoryDtoList);
     }
 
     @GetMapping("/categories/{title}")
-    public ResponseEntity<List<CategoryDto>> getAllCategoriesByTitle(@PathVariable String title){
+    public ResponseEntity<List<CategoryDto>> getAllCategoriesByTitle(@PathVariable String title) {
         List<CategoryDto> categoryDtoList = adminService.getAllCategoriesByTitle(title);
         if (categoryDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categoryDtoList);
     }
-
-
-    //Product Operations
 
     @PostMapping("/{categoryId}/product")
     public ResponseEntity<?> postProduct(@PathVariable Long categoryId, @ModelAttribute ProductDto productDto) throws IOException {
@@ -67,17 +51,22 @@ public class AdminController {
     }
 
     @GetMapping("/{categoryId}/products")
-    public ResponseEntity<List<ProductDto>> getAllProductsByCategory(@PathVariable Long categoryId){
+    public ResponseEntity<List<ProductDto>> getAllProductsByCategory(@PathVariable Long categoryId) {
         List<ProductDto> productDtoList = adminService.getAllProductsByCategory(categoryId);
         if (productDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(productDtoList);
     }
 
     @GetMapping("/{categoryId}/product/{title}")
-    public ResponseEntity<List<ProductDto>> getProductsByCategoryAndTitle(@PathVariable Long categoryId, @PathVariable String title){
-        List<ProductDto> productDtoList = adminService.getProductsByCategoryAndTitle(categoryId,title);
+    public ResponseEntity<List<ProductDto>> getProductsByCategoryAndTitle(@PathVariable Long categoryId, @PathVariable String title) {
+        List<ProductDto> productDtoList = adminService.getProductsByCategoryAndTitle(categoryId, title);
         if (productDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(productDtoList);
     }
 
+    @DeleteMapping("/product/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) throws IOException {
+        adminService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
+    }
 }

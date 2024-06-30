@@ -15,9 +15,15 @@
           {{product.name}}
         </h2>
         <hr>
-        <h5>Price: <b>{{product.price}}</b></h5>
+        <div>
+          <h5>- Price: <b>{{product.price}}</b></h5>
+          <h5>- Description: <b>{{product.description}}</b></h5>
+          <h5>- Category: <b>{{product.categoryName}}</b></h5>
+        </div>
         <hr>
-        Description: <b>{{product.description}}</b> Category: <b>{{product.categoryName}}</b>
+        <div style="float: right;">
+          <button style="margin-left: 10px;" nzSize="small" nz-button nzType="primary" nzDanger (click)="deleteProduct(product.id)">Delete</button>
+        </div>
       </div>
     </div>
   </div>

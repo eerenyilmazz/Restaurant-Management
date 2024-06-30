@@ -19,4 +19,6 @@ public interface AdminService {
     List<ProductDto> getAllProductsByCategory(Long categoryId);
 
     List<ProductDto> getProductsByCategoryAndTitle(Long categoryId , String title);
+
+    void deleteProduct(Long productId);
 }
