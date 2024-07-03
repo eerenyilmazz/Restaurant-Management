@@ -69,4 +69,22 @@ public class AdminController {
         adminService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<ProductDto> getProductsById(@PathVariable Long productId) {
+        ProductDto productDto = adminService.getProductById(productId);
+        if (productDto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDto);
+    }
+
+    @PutMapping("/product/{productId}")
+    public ResponseEntity<?> updateProduct(@PathVariable Long productId, @ModelAttribute ProductDto productDto) throws IOException {
+        ProductDto updatedProductDto = adminService.updateProduct(productId, productDto);
+        if (updatedProductDto == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProductDto);
+    }
+
+
 }

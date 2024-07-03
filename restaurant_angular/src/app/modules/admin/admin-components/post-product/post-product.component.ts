@@ -11,10 +11,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class PostProductComponent implements OnInit {
   
+  productId = this.activatedroute.snapshot.params['productId'];
   categoryId: number = this.activatedroute.snapshot.params['categoryId'];
   validateForm!: FormGroup;
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  existingImage: string | null;
   isSpinning = false;
 
   constructor(
@@ -53,6 +55,15 @@ export class PostProductComponent implements OnInit {
       }
     });
   }
+
+    getProductById() {
+      this.adminService.getProductById(this.productId).subscribe((res) => {
+        console.log(res);
+        const productDto = res;
+        this.existingImage='data:image/jpeg;base64,' + res.returnedImg;
+        this.validateForm.patchValue(productDto);
+      });
+    }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];

@@ -69,6 +69,23 @@ export class AdminService {
     );
   }
 
+  getProductById(productId: number): Observable<any> {
+    return this.http.get(BASE_URL + `api/admin/product/${productId}`, {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateProduct(productId: number, productDto: any): Observable<any> {
+    return this.http.put(BASE_URL + `api/admin/product/${productId}`, productDto, {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+
   private createAuthorizationHeader(): HttpHeaders {
     let authHeaders: HttpHeaders = new HttpHeaders();
     const token = StorageService.getToken();

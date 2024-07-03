@@ -22,6 +22,7 @@
         </div>
         <hr>
         <div style="float: right;">
+          <button nzSize="small" nz-button nzType="primary" [routerLink]="['/admin/product', product.id]">Update</button>
           <button style="margin-left: 10px;" nzSize="small" nz-button nzType="primary" nzDanger (click)="deleteProduct(product.id)">Delete</button>
         </div>
       </div>

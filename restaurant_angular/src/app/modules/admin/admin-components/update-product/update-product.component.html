@@ -1,0 +1,54 @@
+<div style="margin-top: 50px;">
+  <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" nzTip="Working...">
+    <div class="parent">
+      <div class="child">
+        <div nz-row class="imgDiv">
+          <h2 style="text-align: center;">Post Product</h2>
+        </div>
+        <form nz-form [formGroup]="validateForm">
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <div class="file-upload-container">
+                <label for="upload_profile_image" class="file-upload-label">
+                  <div class="circle-image" *ngIf="!imagePreview && existingImage">
+                    <img class="preview-image" [src]="existingImage" alt="existing image" />
+                  </div>
+                  <div class="circle-image" *ngIf="imagePreview">
+                    <img class="preview-image" [src]="imagePreview" alt="preview" />
+                  </div>
+                  <input type="file" nz-button nzType="primary" id="upload_profile_image" accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelected($event)" />
+                </label>
+              </div>
+            </div>
+            <div nz-col [nzSpan]="24" style="margin-top: 20px;">
+              <nz-form-item>
+                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                  <input nz-input placeholder="Name" formControlName="name" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="24">
+              <nz-form-item>
+                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                  <textarea rows="1" nz-input placeholder="Description" formControlName="description"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="24">
+              <nz-form-item>
+                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                  <input nz-input placeholder="Price" formControlName="price" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <button nz-button class="login-form-button" [nzType]="'primary'" (click)="updateProduct()">Update</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nz-spin>
+</div>
