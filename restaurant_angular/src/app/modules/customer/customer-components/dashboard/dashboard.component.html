@@ -1,1 +1,22 @@
-<p>dashboard works!</p>
+<!-- Category list -->
+<div style="background-color: #F8F8F8; min-height: 91vh;">
+    <div style="padding-top: 10px;"></div>
+    <div style="margin-top: 10px;" *ngFor="let category of categories" class="child">
+      <div nz-row>
+        <div nz-col nzSpan="8">
+          <img class="profile" style="height: 130px; width: 200px; border-radius: 10px;" [src]="category.processedImg" alt="profile" />
+        </div>
+        <div nz-col nzSpan="16">
+          <h2 style="cursor: pointer; color: #108ee9;">
+            <hr>
+            {{ category.name }}
+          </h2>
+          <h5>Description: <b>{{ category.description }}</b></h5>
+          <hr>
+          <div style="float: right;">
+            <button nzSize="small" nz-button nzType="primary" routerLink="/admin/{{category.id}}/products">View Products</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
