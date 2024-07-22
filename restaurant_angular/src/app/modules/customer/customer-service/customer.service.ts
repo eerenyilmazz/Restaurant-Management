@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators'; 
-import { StorageService } from 'src/app/auth-service/storage-service/storage.service'; 
+import { catchError } from 'rxjs/operators';
+import { StorageService } from 'src/app/auth-service/storage-service/storage.service';
 
 const BASE_URL = 'http://localhost:8080/';
 
@@ -21,9 +21,17 @@ export class CustomerService {
     );
   }
 
+  getCategoriesByName(title: String): Observable<any> {
+    return this.http.get(`${BASE_URL}api/customer/categories/${title}`, {
+      headers: this.createAuthorizationHeader()
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private createAuthorizationHeader(): HttpHeaders {
     let authHeaders: HttpHeaders = new HttpHeaders();
-    const token = StorageService.getToken();
+    const token = StorageService.getToken(); // Statik metot çağrımı
     if (token) {
       authHeaders = authHeaders.set('Authorization', 'Bearer ' + token);
     }
@@ -31,8 +39,7 @@ export class CustomerService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error('An error occurred:', error); 
+    console.error('An error occurred:', error);
     return throwError('Something went wrong; please try again later.');
   }
-  
 }

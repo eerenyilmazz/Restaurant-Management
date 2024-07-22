@@ -21,4 +21,9 @@ public class CustomerServiceImpl implements CustomerService{
     public List<CategoryDto> getAllCategories() {
         return categoryRepository.findAll().stream().map(Category::getCategoryDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<CategoryDto> getCategoriesByName(String title) {
+        return categoryRepository.findAllByNameContaining(title).stream().map(Category::getCategoryDto).collect(Collectors.toList());
+    }
 }

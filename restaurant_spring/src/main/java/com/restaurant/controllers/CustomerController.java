@@ -5,6 +5,7 @@ import com.restaurant.services.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,13 @@ public class CustomerController {
     @GetMapping("/categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
         List<CategoryDto> categoryDtoList = customerService.getAllCategories();
+        if (categoryDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(categoryDtoList);
+    }
+
+    @GetMapping("/categories/{title}")
+    public ResponseEntity<List<CategoryDto>> getCategoriesByName(@PathVariable String title) {
+        List<CategoryDto> categoryDtoList = customerService.getCategoriesByName(title);
         if (categoryDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(categoryDtoList);
     }
